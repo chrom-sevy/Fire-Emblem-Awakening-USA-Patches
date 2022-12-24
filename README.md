@@ -9,5 +9,5 @@
 2. install just if you wanna use my short cuts
 3. run `just create <project_name>` to generate code.s
 4. write your patch
-5. run `just compile <project_name>` to build a patched code.bin
+5. run `just compile <project_name>` to build a patched code.bin in the `target` directory
 6. run `just mkpatch target\<project_name>.bin` to create an .ips patch
