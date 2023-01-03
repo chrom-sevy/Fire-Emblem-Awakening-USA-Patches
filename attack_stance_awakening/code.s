@@ -5,6 +5,8 @@
 
 .org after_get_pair_up_bonuses
     b       extend
+.org 0x003eeef4 ; skip loading DS+ data pointer, it won't get used anyway
+    b       0x003eef28 ; dual guard skill load
 .org 0x003eef6c
     mov     r0,#0
     strh    r0,[r7,#0x12] ; set dual strike data to false by default
