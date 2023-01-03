@@ -5,17 +5,15 @@
 
 .org after_get_pair_up_bonuses
     b       extend
-.org 0x003eeef4 ; skip loading DS+ data pointer, it won't get used anyway
-    b       0x003eef28 ; dual guard skill load
 .org 0x003eef6c
     mov     r0,#0
-    strh    r0,[r7,#0x12] ; set dual strike data to false by default
+    str     r0,[pair_up_state] ; set dual strike data to false by default
     ; get skill function
     ldr     r0,[r4,#0]
     ldr     r1,[r4,#10]
     mov     r2,#3
-    bl      0x0027d340 ; skill stat actually doesn't get used after this. In this function the pair up state can get set to true
-    ldrh    r0,[r7,#0x12] ; get pair up state
+    bl      0x0027d340 ; skill stat actually doesn't get used after this. In this function the pair up pair_up_state can get set to true
+    ldr     r0,[pair_up_state] ; get pair up pair_up_state
     cmp     r0,#1
     beq     guard_stance;true
     b       attack_stance;false
@@ -65,8 +63,9 @@ return:
 extend:
     str     r0,[sp,#0x0] ; original instruction
     //r0,r1 are free to use
-    ldr     r1,[0x3ef1bc] ; get dual stike data ptr
+    ldr     r1,[pair_up_state] ; get dual stike data ptr
     mov     r0,#1
-    strh    r0,[r1,0x12] ;store 1 in  dual strike data
+    str     r0,[pair_up_state] ;store 1 in  dual strike data
     b       after_get_pair_up_bonuses + 4 ; jump back
+pair_up_state: .word 0
 .close
