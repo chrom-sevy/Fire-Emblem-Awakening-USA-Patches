@@ -63,9 +63,8 @@ return:
 extend:
     str     r0,[sp,#0x0] ; original instruction
     //r0,r1 are free to use
-    ldr     r1,[pair_up_state] ; get dual stike data ptr
     mov     r0,#1
-    str     r0,[pair_up_state] ;store 1 in  dual strike data
+    str     r0,[pair_up_state] ; set
     b       after_get_pair_up_bonuses + 4 ; jump back
 pair_up_state: .word 0
 .close
