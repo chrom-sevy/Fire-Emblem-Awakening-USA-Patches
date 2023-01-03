@@ -1,3 +1,5 @@
-you should probably not use the Dual Strike+ skill. I do not know what it breaks, but better be save than sorry.
+pair up tag team: DS 0%, DG 20%
+adjacent tag team: DS 100% (if weapon is equipped else 0%), DG 0%
 
-This will eventually be rewritten to use another address.
+DS - Dual Strike Chance
+DG - Dual Guard Chance
