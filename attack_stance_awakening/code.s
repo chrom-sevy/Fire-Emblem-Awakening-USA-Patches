@@ -1,8 +1,8 @@
 .3ds
 .open "shared/code.bin","target/attack_stance_awakening.bin",0x100000
 
-.org 0x003eef6c
-    ldr     r0,[r4,#0] ; dereference
+.org 0x003eef6c ; after DS and DG are set to 0
+    ldr     r0,[r4,#0] ; dereference unit pointer
     ldr     r0,[r0,#0x70] ; get pair up state
     cmp     r0,#0
     bne     guard_stance;false
@@ -44,7 +44,7 @@ normal_attack_stance:
     b       return
 empty_attack_stance:
     mov     r0,#0
-    str     r0,[r4,#0x58] ; set both to 0
+    str     r0,[r4,#0x54] ; set both to 0
     str     r0,[r4,#0x58]
     b       return
 return:
