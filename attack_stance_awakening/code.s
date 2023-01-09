@@ -1,22 +1,12 @@
 .3ds
 .open "shared/code.bin","target/attack_stance_awakening.bin",0x100000
 
-.definelabel after_get_pair_up_bonuses,0x0027d440
-
-.org after_get_pair_up_bonuses
-    b       extend
 .org 0x003eef6c
-    mov     r0,#0
-    str     r0,[pair_up_state] ; set dual strike data to false by default
-    ; get skill function
-    ldr     r0,[r4,#0]
-    ldr     r1,[r4,#10]
-    mov     r2,#3
-    bl      0x0027d340 ; skill stat actually doesn't get used after this. In this function the pair up pair_up_state can get set to true
-    ldr     r0,[pair_up_state] ; get pair up pair_up_state
-    cmp     r0,#1
-    beq     guard_stance;true
-    b       attack_stance;false
+    ldr     r0,[r4,#0] ; dereference
+    ldr     r0,[r0,#0x70] ; get pair up state
+    cmp     r0,#0
+    bne     guard_stance;false
+    b       attack_stance;true
 
 guard_stance:
     mov     r8,#20 ; dual guard starts at 20
@@ -59,13 +49,4 @@ empty_attack_stance:
     b       return
 return:
     ldmia   sp!,{r4-r10,pc}
-
-extend:
-    str     r0,[sp,#0x0] ; original instruction
-    //r0,r1 are free to use
-    ldr     r1,[pair_up_state] ; get dual stike data ptr
-    mov     r0,#1
-    str     r0,[pair_up_state] ;store 1 in  dual strike data
-    b       after_get_pair_up_bonuses + 4 ; jump back
-pair_up_state: .word 0
 .close
